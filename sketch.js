@@ -1,36 +1,30 @@
 //QuickStock$®
 var stocks = [];	//Array of stocks
+var symbols = ["aapl","googl", "aac", "mmm"];	//Stocks to fetch, TODO get from user input?
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 
-	//Idrk///////
 	$(document).ready(function() {	//jQuery funciton, only called once the document is "ready" wtf that means..
-		var symbols= ["goog", "aapl", "msft", "mmm", "aac"];	//Stocks to fetch, TODO get from user input?
+		for(j = 0; j < symbols.length; j++) {	//Iterate through the supplied symbols
+			var symbol = symbols[j];	//Grab current symbol
+			var key = 'N6N8STFNCERJ1DTH';	//Personal API Key
+			var URL = 'https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol='+symbol+'&interval=1min&apikey='+key;
 
-		var callback = function(data) {
-				var results = "";
-				$.each(data.query.results.quote, function(i, value){	//for each? TODO how to grab data.query.results.quote[i]??
-					results += value.Name + ":$" + value.LastTradePriceOnly + " ";
-					stocks[i] = new Stock(symbols[i], value.Name, value.LastTradePriceOnly)	//Inserts values into table as ordered pair
-			 })
-			 //alert(results);
-		};
+			$.getJSON(URL, function(data) {	//Grabs the JSON from the URL, and calls a function
+				//console.log(data);
 
+				var iSymbol = data["Meta Data"]["2. Symbol"]; //Grabs official symbol from data rather than str passed by user
+				var weeks = data["Weekly Time Series"];
+				var lastWeek = data["Meta Data"]["3. Last Refreshed"];
+				var price = weeks[lastWeek]["1. open"];//Grabs open price from last week
 
-		var url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quote%20where%20symbol%20in%20("
-		$.each(symbols, function(j, code){	//For each symbol
-			 url += "%22" + code + "%22";
-			 if (j < (symbols.length-1)){
-					url += "%2C";
-			 }
-		});
-
-		url += ")&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
-		$.getJSON(url, callback);
+				stocks.push(new Stock(iSymbol, price) );
+			});
+		}
 	});
-	///////////////
 
+	console.log(stocks);
 }
 
 //TODO cool idea, have all stocks slide down/up from $500 for animation
@@ -38,21 +32,40 @@ function draw() {
 	//Setup
 	background(30);
 
-	//Clock?
-	fill(255,255,255);	//Color to white
-	time = month() + "/" + day() + " " + hour() + ":" + minute() + ":" + second();
-	textSize(50)
-	text(time, width - textWidth(time) -50, height/2);
-
+	//CLOCK modulefunction Clock(m, d, h, mn, s)
+	var time = month() + "/" + day() + " " + hour()%12 + ":" + minute() + ":" + second();
+  fill(255,255,255);	//Color to white
+  textSize(50)
+  text(time, width - textWidth(time) -50, height/2);
+	//
 	textSize(25)
 
-	//Draw all the stocks
-	for (i = 0; i < stocks.length; i++) {
-		stocks[i].drawText(i);
-	}
 
+	for(var i = 0; i < stocks.length; i++) {
+		//begin temp changes
+		textSize(25)
+		fill(255,255,255);	//Color to white
+		text(stocks[i].displayName, stocks[i].x, 50 + 50 * i) 	//width and height are native vars to use too
+		fill(10,255,10);	//TODO make the color change according to $$ or alg
+		push()
+		stroke(255,255,255);
+		strokeWeight(2)
+		rect(stocks[i].width + stocks[i].padding + stocks[i].x, 30 + 50*i, stocks[i].price/2, 20, 20, 1, 20, 1);
+		pop()//Revert to old graphics setting
+	}
 }
 
 function keyPressed() {
 	console.log(key);
 }
+
+//Counts number of object in an object
+function ObjectLength( object ) {
+    var length = 0;
+    for(var key in object ) {
+        if(object.hasOwnProperty(key) ) {
+            ++length;
+        }
+    }
+    return length;
+};
