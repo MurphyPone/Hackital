@@ -13,7 +13,6 @@ function setup() {
 
 			$.getJSON(URL, function(data) {	//Grabs the JSON from the URL, and calls a function
 				//console.log(data);
-
 				var iSymbol = data["Meta Data"]["2. Symbol"]; //Grabs official symbol from data rather than str passed by user
 				var weeks = data["Weekly Time Series"];
 				var lastWeek = data["Meta Data"]["3. Last Refreshed"];
@@ -39,7 +38,6 @@ function draw() {
   text(time, width - textWidth(time) -50, height/2);
 	//
 	textSize(25)
-
 
 	for(var i = 0; i < stocks.length; i++) {
 		//begin temp changes

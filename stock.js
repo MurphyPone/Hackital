@@ -3,8 +3,8 @@ function Stock(smbl, prc) {
   //this.name = nm;
   this.price = fPrice(prc);
 
-  this.format = " : $"
-  this.displayName = this.symbol+ this.format + this.price
+  this.format = " : $";
+  this.displayName = this.symbol + this.format + this.price;
 
   this.width = textWidth(this.displayName);
   this.x = 20;
