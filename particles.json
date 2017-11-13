@@ -1,12 +1,10 @@
-/* ---- particles.js config ---- */
-//Try not to use this at all?
-particlesJS("particles-js", {
+{
   "particles": {
     "number": {
       "value": 50,
       "density": {
         "enable": true,
-        "value_area": 800 //Dunno what this does
+        "value_area": 800
       }
     },
     "color": {
@@ -22,7 +20,7 @@ particlesJS("particles-js", {
         "nb_sides": 5
       },
       "image": {
-        "src": "https://bitcoin.org/img/icons/opengraph.png",
+        "src": "assets/btc.png",
         "width": 100,
         "height": 100
       }
@@ -31,8 +29,8 @@ particlesJS("particles-js", {
       "value": 0.5,
       "random": false,
       "anim": {
-        "enable": false,  //Makes dots blip
-        "speed": 10,  //controls speed of anim
+        "enable": false,
+        "speed": 10,
         "opacity_min": 0.1,
         "sync": false
       }
@@ -42,21 +40,21 @@ particlesJS("particles-js", {
       "random": true,
       "anim": {
         "enable": false,
-        "speed": 40,
+        "speed": 60,
         "size_min": 0.1,
         "sync": false
       }
     },
     "line_linked": {
       "enable": true,
-      "distance": 150,  //Threshold to link with other dots
+      "distance": 150,
       "color": "#ffffff",
       "opacity": 0.4,
       "width": 1
     },
     "move": {
       "enable": true,
-      "speed": 2, //Controls speed of movement of dots
+      "speed": 2,
       "direction": "bottom-right",
       "random": false,
       "straight": false,
@@ -69,7 +67,7 @@ particlesJS("particles-js", {
       }
     }
   },
-  "interactivity": {  //Annoying for a bg effect
+  "interactivity": {
     "detect_on": "canvas",
     "events": {
       "onhover": {
@@ -109,27 +107,4 @@ particlesJS("particles-js", {
     }
   },
   "retina_detect": true
-});
-
-
-/* ---- stats.js config ---- */
-
-/*
-var count_particles, stats, update;
-stats = new Stats;
-stats.setMode(3); //3 hides
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.left = '0px';
-stats.domElement.style.top = '0px';
-document.body.appendChild(stats.domElement);
-count_particles = document.querySelector('.js-count-particles');
-update = function() {
-  stats.begin();
-  stats.end();
-  if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
-    //count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
-  }
-  requestAnimationFrame(update);  //This whack shit
-};
-requestAnimationFrame(update);
-*/
+}
